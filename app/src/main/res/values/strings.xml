@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">MovieCatalogue</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="poster_film">Poster Film</string>
+    <string name="title">Title</string>
+    <string name="status">Status</string>
+    <string name="language">Language</string>
+    <string name="release_year">Release Year</string>
+    <string name="casts">Casts</string>
+    <string name="description">Description</string>
+</resources>
