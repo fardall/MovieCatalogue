@@ -24,7 +24,8 @@ object DataDummy {
                 ),
                 "Released",
                 "English",
-                R.drawable.poster_alita
+                R.drawable.poster_alita,
+                0
             )
         )
 
@@ -42,7 +43,8 @@ object DataDummy {
                 ),
                 "Released",
                 "English",
-                R.drawable.poster_aquaman
+                R.drawable.poster_aquaman,
+                0
             )
         )
 
@@ -60,7 +62,8 @@ object DataDummy {
                 ),
                 "Released",
                 "English",
-                R.drawable.poster_bohemian
+                R.drawable.poster_bohemian,
+                0
             )
         )
 
@@ -78,7 +81,8 @@ object DataDummy {
                 ),
                 "Released",
                 "English",
-                R.drawable.poster_cold_persuit
+                R.drawable.poster_cold_persuit,
+                0
             )
         )
 
@@ -96,7 +100,8 @@ object DataDummy {
                 ),
                 "Released",
                 "English",
-                R.drawable.poster_crimes
+                R.drawable.poster_crimes,
+                0
             )
         )
 
@@ -114,7 +119,8 @@ object DataDummy {
                 ),
                 "Released",
                 "English",
-                R.drawable.poster_how_to_train
+                R.drawable.poster_how_to_train,
+                0
             )
         )
 
@@ -132,7 +138,8 @@ object DataDummy {
                 ),
                 "Released",
                 "English",
-                R.drawable.poster_infinity_war
+                R.drawable.poster_infinity_war,
+                0
             )
         )
 
@@ -150,7 +157,8 @@ object DataDummy {
                 ),
                 "Released",
                 "English",
-                R.drawable.poster_ralph
+                R.drawable.poster_ralph,
+                0
             )
         )
 
@@ -168,7 +176,8 @@ object DataDummy {
                 ),
                 "Released",
                 "English",
-                R.drawable.poster_robin_hood
+                R.drawable.poster_robin_hood,
+                0
             )
         )
 
@@ -186,26 +195,12 @@ object DataDummy {
                 ),
                 "Released",
                 "English",
-                R.drawable.poster_spiderman
+                R.drawable.poster_spiderman,
+                0
             )
         )
 
         return movies
-    }
-
-    fun getSelectedFilm(title: String) : Film? {
-        for (movie in movies) {
-            if (title == movie.title) {
-                return movie
-            }
-        }
-
-        for (show in shows) {
-            if (title == show.title) {
-                return show
-            }
-        }
-        return null
     }
 
     fun generateDataShows(): List<Film> {
@@ -225,7 +220,8 @@ object DataDummy {
                 ),
                 "Ended",
                 "English",
-                R.drawable.poster_arrow
+                R.drawable.poster_arrow,
+                1
             )
         )
 
@@ -243,7 +239,8 @@ object DataDummy {
                 ),
                 "Ended",
                 "Japanese",
-                R.drawable.poster_dragon_ball
+                R.drawable.poster_dragon_ball,
+                1
             )
         )
 
@@ -261,7 +258,8 @@ object DataDummy {
                 ),
                 "Ended",
                 "Japanese",
-                R.drawable.poster_fairytail
+                R.drawable.poster_fairytail,
+                1
             )
         )
 
@@ -279,7 +277,8 @@ object DataDummy {
                 ),
                 "Returning Series",
                 "English",
-                R.drawable.poster_family_guy
+                R.drawable.poster_family_guy,
+                1
             )
         )
 
@@ -297,7 +296,8 @@ object DataDummy {
                 ),
                 "Returning Series",
                 "English",
-                R.drawable.poster_flash
+                R.drawable.poster_flash,
+                1
             )
         )
 
@@ -315,7 +315,8 @@ object DataDummy {
                 ),
                 "Ended",
                 "English",
-                R.drawable.poster_gotham
+                R.drawable.poster_gotham,
+                1
             )
         )
 
@@ -333,7 +334,8 @@ object DataDummy {
                 ),
                 "Canceled",
                 "English",
-                R.drawable.poster_iron_fist
+                R.drawable.poster_iron_fist,
+                1
             )
         )
 
@@ -351,7 +353,8 @@ object DataDummy {
                 ),
                 "Ended",
                 "Japanese",
-                R.drawable.poster_naruto_shipudden
+                R.drawable.poster_naruto_shipudden,
+                1
             )
         )
 
@@ -369,7 +372,8 @@ object DataDummy {
                 ),
                 "Ended",
                 "English",
-                R.drawable.poster_supergirl
+                R.drawable.poster_supergirl,
+                1
             )
         )
 
@@ -387,10 +391,43 @@ object DataDummy {
                 ),
                 "Returning Series",
                 "English",
-                R.drawable.poster_the_walking_dead
+                R.drawable.poster_the_walking_dead,
+                1
             )
         )
 
         return shows
     }
+
+    fun getSelectedFilm(title: String) : Film? {
+        for (movie in movies) {
+            if (title == movie.title) {
+                return movie
+            }
+        }
+
+        for (show in shows) {
+            if (title == show.title) {
+                return show
+            }
+        }
+        return null
+    }
+
+    fun generateDummyFavMovie(): List<Film> {
+        val dummyFavMovie = ArrayList<Film>()
+        val dummyMovie = generateDataMovies()[0]
+        dummyMovie.isFavorite = 1
+        dummyFavMovie.add(dummyMovie)
+        return dummyFavMovie
+    }
+
+    fun generateDummyFavShow(): List<Film> {
+        val dummyFavShow = ArrayList<Film>()
+        val dummyShow = generateDataShows()[0]
+        dummyShow.isFavorite = 1
+        dummyFavShow.add(dummyShow)
+        return dummyFavShow
+    }
+
 }

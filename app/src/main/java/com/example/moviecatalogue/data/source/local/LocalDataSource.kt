@@ -1,44 +1,58 @@
 package com.example.moviecatalogue.data.source.local
 
-import android.os.Handler
-import android.os.Looper
-import com.example.moviecatalogue.utils.DataDummy
+import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
+import com.example.moviecatalogue.data.source.local.room.FilmDao
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
-class LocalDataSource private constructor(private val data: DataDummy) {
-    private val handler = Handler(Looper.getMainLooper())
+class LocalDataSource private constructor(private val filmDao: FilmDao) {
+    private val executorService: ExecutorService = Executors.newSingleThreadExecutor()
+
+
 
     companion object {
-        private const val SERVICE_LATENCY_IN_MILLIS: Long = 2000
 
         @Volatile
         private var instance: LocalDataSource? = null
 
-        fun getInstance(data: DataDummy): LocalDataSource =
+        fun getInstance(filmDao: FilmDao): LocalDataSource =
             instance ?: synchronized(this) {
-                instance ?: LocalDataSource(data).apply { instance = this }
+                instance ?: LocalDataSource(filmDao).apply { instance = this }
             }
     }
 
-    fun getMovies(callback: LoadMoviesCallback) {
-        handler.postDelayed({ callback.onMoviesReceived(data.generateDataMovies()) }, SERVICE_LATENCY_IN_MILLIS)
+    fun getFavMovies(): DataSource.Factory<Int, Film> = filmDao.getFavMovies()
+
+    fun getFavShows(): DataSource.Factory<Int, Film> = filmDao.getFavTvShows()
+
+    fun delete(film: Film) {
+        executorService.execute { filmDao.deleteFilm(film) }
     }
 
-    fun getTvShows(callback: LoadShowsCallback) {
-        handler.postDelayed({ callback.onShowsReceived(data.generateDataShows()) }, SERVICE_LATENCY_IN_MILLIS)
+    fun updateFavorite(title: String, isFavorite: Int) {
+        executorService.execute { filmDao.updateFavorite(title, isFavorite) }
     }
 
-    fun getFilm(title: String, callback: LoadFilmCallback) {
-        handler.postDelayed({ data.getSelectedFilm(title)?.let { callback.onFilmReceived(it) } } , SERVICE_LATENCY_IN_MILLIS)
-    }
-    interface LoadMoviesCallback {
-        fun onMoviesReceived(movies: List<Film>)
+    fun getAllMovies(): LiveData<List<Film>> {
+        return filmDao.getAllMovies()
     }
 
-    interface LoadShowsCallback {
-        fun onShowsReceived(shows: List<Film>)
+    fun getAllShows(): LiveData<List<Film>> {
+        return filmDao.getAllShows()
     }
 
-    interface LoadFilmCallback {
-        fun onFilmReceived(film: Film)
+    fun getFilm(title: String): LiveData<Film>? = filmDao.getFilm(title)
+
+    fun insertFilm(film: List<Film>) {
+        executorService.execute { filmDao.insertFilm(film) }
     }
+
+    fun isEmpty(): Boolean {
+         if (filmDao.isEmpty("Aquaman") == null) {
+             return true
+         }
+        return false
+    }
+
 }

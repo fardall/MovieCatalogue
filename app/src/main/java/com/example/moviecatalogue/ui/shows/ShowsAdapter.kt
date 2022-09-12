@@ -25,7 +25,7 @@ class ShowsAdapter : RecyclerView.Adapter<ShowsAdapter.ViewHolder>() {
                 tvDescription.text = show.description
                 itemView.setOnClickListener{
                     val toDetailFilm = Intent(itemView.context, DetailFilmActivity::class.java)
-                    toDetailFilm.putExtra(DetailFilmActivity.EXTRA_FILM, show.title)
+                    toDetailFilm.putExtra(DetailFilmActivity.EXTRA_NAME, show.title)
                     itemView.context.startActivity(toDetailFilm)
                 }
                 Glide .with(itemView.context)

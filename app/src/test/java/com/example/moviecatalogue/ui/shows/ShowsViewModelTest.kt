@@ -11,13 +11,15 @@ import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
+import org.mockito.junit.MockitoJUnitRunner
 
+@RunWith(MockitoJUnitRunner::class)
 class ShowsViewModelTest {
     private lateinit var viewModel: ShowsViewModel
-
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -34,7 +36,7 @@ class ShowsViewModelTest {
     }
 
     @Test
-    fun getMovies() {
+    fun getShows() {
         val dummyShows = DataDummy.generateDataShows()
         val shows = MutableLiveData<List<Film>>()
         shows.value = dummyShows
